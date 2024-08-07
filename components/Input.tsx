@@ -8,7 +8,6 @@ interface InputProps {
   required: boolean;
   errors?: string[];
   placeholder: string;
-  autofocus?: boolean;
 }
 
 export default function Input({
@@ -35,7 +34,6 @@ export default function Input({
         placeholder={placeholder}
         required={required}
         className="p-2 pl-0 bg-transparent text-lg outline-none "
-        autoFocus={autofocus}
       ></input>
     </div>
   );
