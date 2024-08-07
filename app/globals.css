@@ -2,8 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  li {
+    @apply list-none;
+  }
+}
+
 @layer components {
   .icons {
     @apply w-6 h-6 m-3 bg-transparent;
+  }
+  .error-msg {
+    @apply text-red-500 text-sm;
   }
 }

@@ -16,7 +16,6 @@ export default function Input({
   placeholder,
   required,
   errors,
-  autofocus,
 }: InputProps) {
   const hasError = errors && errors.length > 0;
   return (
