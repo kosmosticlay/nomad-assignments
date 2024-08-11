@@ -20,6 +20,9 @@
   .h2 {
     @apply text-xl font-semibold;
   }
+  .wrapper {
+    @apply w-full h-screen flex flex-col items-center;
+  }
 
   /* home */
   .homeBtn {

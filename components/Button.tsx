@@ -12,7 +12,7 @@ export default function Button({ text }: { text: string }) {
           : "bg-orange-100 text-stone-800 font-semibold rounded-md"
       } p-2 text-lg active:scale-95 transform transition-all duration-300`}
     >
-      {pending ? "로딩중..." : text}
+      {pending ? "진행중..." : text}
     </button>
   );
 }

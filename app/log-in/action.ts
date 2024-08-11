@@ -1,6 +1,10 @@
 "use server";
 
 import { z } from "zod";
+import bcrypt from "bcrypt";
+import db from "@/lib/db";
+import getSession from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export type FormState = {
   errors?: {
@@ -11,8 +15,23 @@ export type FormState = {
   };
 };
 
+const checkUserExists = async (username: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      username,
+    },
+    select: {
+      id: true,
+    },
+  });
+  return Boolean(user);
+};
+
 const formSchema = z.object({
-  username: z.string().min(3, "아이디는 3자 이상 입력하세요."),
+  username: z
+    .string()
+    .min(3, "아이디는 3자 이상 입력하세요.")
+    .refine(checkUserExists, "존재하지 않는 사용자입니다."),
   password: z.string().min(1, "비밀번호를 입력하세요."),
 });
 
@@ -21,11 +40,39 @@ export async function logIn(prevState: any, formData: FormData) {
     username: formData.get("username"),
     password: formData.get("password"),
   };
-  const result = formSchema.safeParse(data);
+
+  const result = await formSchema.safeParseAsync(data);
+
   if (!result.success) {
     console.log(result.error.flatten());
     return result.error.flatten();
   } else {
-    console.log(result.data);
+    const user = await db.user.findUnique({
+      where: {
+        username: result.data.username,
+      },
+      select: {
+        id: true,
+        password: true,
+      },
+    });
+    const ok = await bcrypt.compare(
+      result.data.password,
+      user!.password ?? "something"
+    );
+    if (ok) {
+      const session = await getSession();
+      session.id = user!.id;
+
+      await session.save();
+      redirect("/profile");
+    } else {
+      return {
+        fieldErrors: {
+          password: ["비밀번호가 일치하지 않습니다."],
+          username: [],
+        },
+      };
+    }
   }
 }
