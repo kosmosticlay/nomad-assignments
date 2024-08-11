@@ -3,16 +3,41 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    @apply w-full min-h-screen h-full bg-stone-800 text-white;
+  }
+
   li {
     @apply list-none;
   }
 }
 
 @layer components {
+  /* global */
+  .h1 {
+    @apply text-3xl font-semibold;
+  }
+  .h2 {
+    @apply text-xl font-semibold;
+  }
+
+  /* home */
+  .homeBtn {
+    @apply size-40 bg-white rounded-xl flex-center font-semibold text-2xl text-stone-800 cursor-pointer hover:bg-orange-100 active:click-animation;
+  }
   .icons {
-    @apply w-6 h-6 m-3 bg-transparent;
+    @apply w-6 h-6 m-3 text-stone-800;
   }
   .error-msg {
     @apply text-red-500 text-sm;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  .click-animation {
+    @apply scale-95 transition-transform duration-300 ease-in-out;
   }
 }
