@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { useFormState } from "react-dom";
 import { createAccount } from "./action";
+import Link from "next/link";
 
 export default function CreateAccount() {
   const [state, dispatch] = useFormState(createAccount, null);
@@ -46,6 +47,12 @@ export default function CreateAccount() {
         />
         <Button text="계정 생성" />
       </form>
+      <Link
+        href="/log-in"
+        className="mt-4 underline underline-offset-8 hover:text-orange-100 active:click-animation"
+      >
+        아이디가 있다면 바로 로그인하기😍
+      </Link>
     </div>
   );
 }

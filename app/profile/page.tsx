@@ -1,7 +1,6 @@
-import Button from "@/components/Button";
+import Header from "@/components/header";
 import db from "@/lib/db";
 import getSession from "@/lib/session";
-import { notFound, redirect } from "next/navigation";
 
 async function getUser() {
   const session = await getSession();
@@ -15,26 +14,18 @@ async function getUser() {
       return user;
     }
   }
-  notFound();
 }
 
 export default async function Profile() {
   const user = await getUser();
-  const logOut = async () => {
-    "use server";
-    const session = await getSession();
-    await session.destroy();
-    redirect("/");
-  };
+
   return (
-    <div className="wrapper py-8 justify-between">
+    <div className="wrapper">
+      <Header title="내 정보" />
       <div className="flex-center flex-col">
-        <h1 className="h1 my-3">Hi, 🌸{user?.username}🌸</h1>
+        <h1 className="h1 my-3">🌸{user?.username}🌸</h1>
         <p>({user?.email})</p>
       </div>
-      <form action={logOut}>
-        <Button text="로그아웃" />
-      </form>
     </div>
   );
 }

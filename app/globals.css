@@ -31,6 +31,10 @@
   .icons {
     @apply w-6 h-6 m-3 text-stone-800;
   }
+  .header-icons {
+    @apply size-10 cursor-pointer hover:text-orange-100;
+  }
+
   .error-msg {
     @apply text-red-500 text-sm;
   }

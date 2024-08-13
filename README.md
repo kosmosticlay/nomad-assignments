@@ -1,17 +1,12 @@
-## NomadCoder Assignment 29 : Authentication
+## NomadCoder Assignment 30 : Tweets
 
 ### 🍀홈 (/)
 
-<img src="./public/images/home.png" width="50%" alt="홈 화면">
+- 로그인 전 : 로그인 화면(/log-in)으로 리다이렉트
+- 로그인 후 : 홈 화면에 접근 가능하며 화살표(pagination)로 이전/다음 트윗 이동 구현
 
-### 🍀회원가입 (/create-account)
+<img src="./public/images/new-home.png" width="50%" alt="홈 화면">
 
-<img src="./public/images/create-account.png" width="50%" alt="회원가입 화면">
+### 🍀 해당 트윗 상세 보기 (/tweets/[id])
 
-### 🍀로그인 (/log-in)
-
-<img src="./public/images/log-in.png" width="50%" alt="로그인 화면">
-
-### 🍀로그인 후 프로필 (/profile)
-
-<img src="./public/images/profile.png" width="50%" alt="프로필 화면">
+<img src="./public/images/tweet-detail.png" width="50%" alt="트윗 상세보기 화면">
