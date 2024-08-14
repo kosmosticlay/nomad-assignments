@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-interface TweetProps {
+export interface TweetProps {
   tweet: string;
   id: number;
   user: { username: string };
