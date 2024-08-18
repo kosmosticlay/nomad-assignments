@@ -3,6 +3,7 @@
 import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { z } from "zod";
+import { getUser } from "../(auth)/action";
 
 export async function getPreviousTweets(page: number) {
   const tweets = await db.tweet.findMany({
@@ -42,20 +43,6 @@ export async function getNextTweets(page: number) {
     },
   });
   return tweets;
-}
-
-async function getUser() {
-  const session = await getSession();
-  if (session.id) {
-    const user = await db.user.findUnique({
-      where: {
-        id: session.id,
-      },
-    });
-    if (user) {
-      return user;
-    }
-  }
 }
 
 const formSchema = z.object({

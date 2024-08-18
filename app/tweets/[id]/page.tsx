@@ -1,35 +1,11 @@
 import Header from "@/components/header";
-import db from "@/lib/db";
 import { notFound } from "next/navigation";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { formatToTimeAgo } from "@/lib/utils";
 import BackButton from "@/components/BackButton";
-
-async function getTweet(id: number) {
-  const tweet = await db.tweet.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      id: true,
-      tweet: true,
-      created_at: true,
-      updated_at: true,
-      user: {
-        select: {
-          username: true,
-          email: true,
-        },
-      },
-      Likes: {
-        select: {
-          user: true,
-        },
-      },
-    },
-  });
-  return tweet;
-}
+import Comment from "@/components/Comment";
+import LikeButton from "@/components/LikeButton";
+import { getComments, getTweet, getUser } from "@/app/(auth)/action";
 
 export default async function TweetDetail({
   params,
@@ -46,16 +22,26 @@ export default async function TweetDetail({
     return notFound();
   }
 
+  const user = await getUser();
+  if (!user) {
+    return notFound();
+  }
+
+  const comments = await getComments(id);
+  if (!comments) {
+    return notFound();
+  }
+
   return (
     <div className="wrapper">
       <Header title={`${tweet.user.username}'s tweet`} />
-      <div className="w-full h-screen flex-center rounded-md">
-        <div className="p-3 min-w-[400px] min-h-[400px] bg-white text-stone-800">
+      <div className="mt-5 w-full flex-center rounded-md">
+        <div className="p-3 w-[400px] bg-white text-stone-800">
           <div className="flex items-center pb-3 mb-3 border-b-2 border-stone-500">
             <BackButton />
             <h1 className="h2">트윗</h1>
           </div>
-          <p className="h-[260px] pt-3">{tweet.tweet}</p>
+          <p className="h-[120px] pt-3">{tweet.tweet}</p>
           <div className="mt-3 pt-3 border-t-2 border-stone-500 flex justify-between">
             <div className="flex items-center">
               <p>Written By {tweet.user.username}</p>
@@ -63,10 +49,16 @@ export default async function TweetDetail({
                 {formatToTimeAgo(tweet.created_at.toString())}
               </p>
             </div>
-            <p className="flex">
-              {tweet.Likes.length} likes <HeartIcon className="ml-1 size-6" />
+            <p className="flex items-center">
+              {tweet.Likes.length} likes
+              <LikeButton
+                isLiked={false}
+                tweetId={tweet.id}
+                likeCount={tweet.Likes.length}
+              />
             </p>
           </div>
+          <Comment id={id} comments={comments} userId={user.id} />
         </div>
       </div>
     </div>

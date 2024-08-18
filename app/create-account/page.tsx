@@ -8,7 +8,6 @@ import Link from "next/link";
 
 export default function CreateAccount() {
   const [state, dispatch] = useFormState(createAccount, null);
-  console.log(state);
   return (
     <div className="wrapper">
       <h1 className="h1 my-8">회원가입</h1>

@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function Login() {
   const [state, dispatch] = useFormState(logIn, null);
-  console.log(state);
+
   return (
     <div className="wrapper">
       <h1 className="h1 my-8">로그인</h1>
